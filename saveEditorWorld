@@ -20,7 +20,7 @@ function setupFunction() {
 	echo "Checking if ~/bin exists"
 	echo "--------------------------------------------"
 	#### If ~/bin exists, offer to copy script to bin
-	if [[ -d "~/bin" ]]
+	if [[ -d "/home/$(whoami)/bin" ]]
 	then
 		echo "~/bin exists"
 		echo "--------------------------------------------"
@@ -147,6 +147,8 @@ function runProgram() {
 	wine ~/Documents/saveEditorWorld/MHWISaveEditor.exe
 
 	### Put save in place 
+	echo "Putting save files in place"
+	echo "--------------------------------------------"
 	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 $filePath
 
 	### Check if last command ran successfully
