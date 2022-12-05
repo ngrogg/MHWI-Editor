@@ -16,15 +16,64 @@ function helpFunction() {
 
 ## Function to put everything in place 
 function setupFunction() {
-	#TODO
 	### check if ~/bin exists
+	echo "Checking if ~/bin exists"
+	echo "--------------------------------------------"
 	#### If ~/bin exists, offer to copy script to bin
+	if [[ -d "~/bin" ]]
+	then
+		echo "~/bin exists"
+		echo "--------------------------------------------"
+		echo "Put script in ~/bin?"
+		echo "Enter y/n to proceed: "
+		read input
+
+		if [[ "$input" == "Y" || "$input" == "y" ]]
+		then
+			echo "Moving script to ~/bin"
+			echo "--------------------------------------------"
+			cp saveEditorWorld ~/bin/
+		else
+			echo "Maybe next time, moving on!"
+		fi
+
 	#### If ~/bin doesn't exist, tell user they'll need to run script from repo
+	else
+		echo "~/bin not found"
+		echo "--------------------------------------------"
+		echo "~/bin doesn't appear to be configured"
+		echo "Just run the script normally"
+	fi
 	### Check if wine installed
+	echo "Checking if WINE installed"
+	echo "--------------------------------------------"
 	#### If wine not installed, exit
+	if [[ -z $(which wine) ]]
+	then
+		echo "ISSUE - WINE not installed"
+		echo "--------------------------------------------"
+		echo "Script requires WINE to be installed"
+		echo "To keep script distro agnostic"
+		echo "WINE needs to be installed manually"
+		echo "Re-install WINE and run again"
+		exit
+
 	#### If wine installed, echo and move on
+	else
+		echo "WINE check clear"
+		echo "--------------------------------------------"
+		echo "WINE installed, proceeding"
+	fi
+
 	### mkdir ~/Documents/saveEditorWorld/saveBackups
+	echo "Making folders in ~/Documents" 
+	echo "--------------------------------------------"
+	mkdir -p ~/Documents/saveEditorWorld/saveBackups
+
 	### Unzip to saveEditorWorld
+	echo "Moving files into place"
+	echo "--------------------------------------------"
+	unzip MHWISaveEditor-v0.1.5-5995-0-1-5-1651750541.zip -d ~/Documents/saveEditorWorld/
 }
 
 ## Function to remove everything
@@ -36,6 +85,7 @@ function uninstallFunction() {
 	read junkInput
 	### Check if script in ~/bin
 	if [[ -f "~/bin/worldSaveEditor" ]]
+	then
 		#### Remove if exists
 		rm ~/bin/saveEditorWorld
 	fi
@@ -45,11 +95,29 @@ function uninstallFunction() {
 
 ## Function to run script 
 function runProgram() {
-	#TODO Path to savefile more dynamic
+	### Filepath to save file
+	filePath=$(find ~/ -name SAVEDATA1000 | grep -i userdata)
+
+	### Check if filePath empty
+	if [[ -z $filePath ]]
+	then
+		echo "ISSUE - Save not found!"
+		echo "--------------------------------------------"
+		echo "MHW/MHWI save not found!"
+		echo "Make sure MHW/MHWI is installed."
+		echo "Exiting"
+		exit
+	fi
+
+	### Output filepath to screen for verbosity
+	echo "File path to save"
+	echo "--------------------------------------------"
+	echo $filePath
+
 	### Copy Save to backup folder 
 	echo "Copying save to working directory"
 	echo "--------------------------------------------"
-	cp ~/.steam/debian-installation/userdata/296972935/582010/remote/SAVEDATA1000 ~/Documents/saveEditorWorld/saveBackups
+	cp $filePath ~/Documents/saveEditorWorld/saveBackups
 
 	### Check if last command ran successfully
 	if [[ $? -ne 0 ]]
@@ -71,10 +139,15 @@ function runProgram() {
 	fi
 
 	### Run save editor
+	echo "Running Save Editor"
+	echo "--------------------------------------------"
+	echo "Open your save at the filepath below"
+	echo "~/Documents/saveEditorWorld/saveBackups"
+	echo ""
 	wine ~/Documents/saveEditorWorld/MHWISaveEditor.exe
 
 	### Put save in place 
-	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 cp ~/.steam/debian-installation/userdata/296972935/582010/remote/SAVEDATA1000
+	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 $filePath
 
 	### Check if last command ran successfully
 	if [[ $? -ne 0 ]]
@@ -92,16 +165,22 @@ echo "Checking if flags passed"
 echo "--------------------------------------------"
 if [[ "$1" == "setup" || "$1" == "Setup" ]]
 then
+	echo "Running Setup function"
+	echo "--------------------------------------------"
 	setupFunction
 	exit
 fi
 if [[ "$1" == "help" || "$1" == "Help" ]]
 then
+	echo "Running Help function"
+	echo "--------------------------------------------"
 	helpFunction
 	exit
 fi
 if [[ "$1" == "uninstall" || "$1" == "Uninstall" ]]
 then
+	echo "Running uninstall function :("
+	echo "--------------------------------------------"
 	uninstallFunction
 	exit
 fi
