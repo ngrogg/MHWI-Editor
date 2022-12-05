@@ -1,0 +1,110 @@
+#!/usr/bin/bash
+
+# Script to backup saves and launch the MHWI save editor
+
+## Help function
+function helpFunction() {
+	echo "Help"
+	echo "--------------------------------------------"
+	echo "help/Help"
+	echo "-- Display this help message"
+	echo "setup/Setup"
+	echo "-- Configure script"
+	echo "uninstall/Uninstall"
+	echo "-- Remove script files outside git repo"
+}
+
+## Function to put everything in place 
+function setupFunction() {
+	#TODO
+	### check if ~/bin exists
+	#### If ~/bin exists, offer to copy script to bin
+	#### If ~/bin doesn't exist, tell user they'll need to run script from repo
+	### Check if wine installed
+	#### If wine not installed, exit
+	#### If wine installed, echo and move on
+	### mkdir ~/Documents/saveEditorWorld/saveBackups
+	### Unzip to saveEditorWorld
+}
+
+## Function to remove everything
+function uninstallFunction() {
+	echo "Uninstall"
+	echo "--------------------------------------------"
+	echo "Remove all files outside git repo?"
+	echo "Press enter to proceed or ctrl-c to cancel: "
+	read junkInput
+	### Check if script in ~/bin
+	if [[ -f "~/bin/worldSaveEditor" ]]
+		#### Remove if exists
+		rm ~/bin/saveEditorWorld
+	fi
+	### Remove files/folders in ~/Documents 
+	rm -rf ~/Documents/saveEditorWorld
+}
+
+## Function to run script 
+function runProgram() {
+	#TODO Path to savefile more dynamic
+	### Copy Save to backup folder 
+	echo "Copying save to working directory"
+	echo "--------------------------------------------"
+	cp ~/.steam/debian-installation/userdata/296972935/582010/remote/SAVEDATA1000 ~/Documents/saveEditorWorld/saveBackups
+
+	### Check if last command ran successfully
+	if [[ $? -ne 0 ]]
+	then
+		echo "ISSUE - Save not copied"
+		echo "--------------------------------------------"
+		exit
+	fi
+
+	### Create backup of save
+	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000-BK
+
+	### Check if last command ran successfully
+	if [[ $? -ne 0 ]]
+	then
+		echo "ISSUE - Backup not created"
+		echo "--------------------------------------------"
+		exit
+	fi
+
+	### Run save editor
+	wine ~/Documents/saveEditorWorld/MHWISaveEditor.exe
+
+	### Put save in place 
+	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 cp ~/.steam/debian-installation/userdata/296972935/582010/remote/SAVEDATA1000
+
+	### Check if last command ran successfully
+	if [[ $? -ne 0 ]]
+	then
+		echo "ISSUE - Save not put in place correctly"
+		echo "--------------------------------------------"
+		exit
+	fi
+}
+
+## Run script 
+echo "Running save editor"
+echo "--------------------------------------------"
+echo "Checking if flags passed"
+echo "--------------------------------------------"
+if [[ "$1" == "setup" || "$1" == "Setup" ]]
+then
+	setupFunction
+	exit
+fi
+if [[ "$1" == "help" || "$1" == "Help" ]]
+then
+	helpFunction
+	exit
+fi
+if [[ "$1" == "uninstall" || "$1" == "Uninstall" ]]
+then
+	uninstallFunction
+	exit
+fi
+echo "Running main function"
+echo "--------------------------------------------"
+runProgram
