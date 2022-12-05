@@ -33,6 +33,8 @@ function setupFunction() {
 			echo "Moving script to ~/bin"
 			echo "--------------------------------------------"
 			cp saveEditorWorld ~/bin/
+			echo "Ensuring execute permissions are set"
+			chmod 775 ~/bin/saveEditorWorld
 		else
 			echo "Maybe next time, moving on!"
 		fi
