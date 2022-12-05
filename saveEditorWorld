@@ -144,7 +144,7 @@ function runProgram() {
 	echo "Running Save Editor"
 	echo "--------------------------------------------"
 	echo "Open your save at the filepath below"
-	echo "~/Documents/saveEditorWorld/saveBackups"
+	echo "$filePath"
 	echo ""
 	wine ~/Documents/saveEditorWorld/MHWISaveEditor.exe
 
