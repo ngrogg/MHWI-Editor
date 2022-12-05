@@ -1,24 +1,24 @@
 # MHWI Editor
 
 ## Overview
-A wrapper for the Nexus Mods MHWI save editor. Since I run Linux, MHWI runs on Linux and I found out the save editor works on Linux. </br>
+A wrapper for the Nexus Mods MHWI save editor. Since I run Linux, MHWI runs on Linux and I found out the save editor works on Linux. <br>
 
-Original editor can be found here, </br>
+Original editor can be found here, <br>
 https://www.nexusmods.com/monsterhunterworld/mods/5995
 
-Please note this is an in-progress project. </br>
+Please note this is an in-progress project. <br>
 
 I've included the zip file I found to work for this script. I tested and confirmed everything working on
 Pop OS 22 (Ubuntu 22). No warranties and YMMV.
 
 ## Functions
-The script can take BASH flags to perform specific functions. These functions are as follows: </br>
+The script can take BASH flags to perform specific functions. These functions are as follows: <br>
 
 ### Help 
 Outputs script help function one-liners and exits. 
 
 ### Setup
-The script has a 'setup' function to help put everything in place for ease of use. </br>
+The script has a 'setup' function to help put everything in place for ease of use. <br>
 This function (once complete) will check the following:
 * If a `~/bin` folder exists
   - Offer to copy script if it exists
@@ -30,13 +30,13 @@ This function (once complete) will check the following:
 * unzip save editor to created folders in `~/Documents`
 
 ### Removal
-Removes the script from `~/bin` if applicable and all created files in `~/Documents`. </br>
+Removes the script from `~/bin` if applicable and all created files in `~/Documents`. <br>
 
 ### Running
-This is the default action the script will take if no flags are passed. </br>
+This is the default action the script will take if no flags are passed. <br>
 
-Script will copy the save file from installed Steam files to `~/Documents/saveEditorWorld/saveBackups`. </br>
-A backup of the save file will created called `SAVEDATA1000-BK` just in case. </br>
-Once the editor loads use the filepath option in the editor to open the copied save at `~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000`. </br>
-From there edit your save, and save when complete. </br>
-On closing the save editor the edited save file will be put in place in Steam files. </br>
+Script will copy the save file from installed Steam files to `~/Documents/saveEditorWorld/saveBackups`. <br>
+A backup of the save file will created called `SAVEDATA1000-BK` just in case. <br>
+Once the editor loads use the filepath option in the editor to open the copied save at `~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000`. <br>
+From there edit your save, and save when complete. <br>
+On closing the save editor the edited save file will be put in place in Steam files. <br>
