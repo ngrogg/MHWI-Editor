@@ -12,6 +12,8 @@ function helpFunction() {
 	echo "-- Configure script"
 	echo "uninstall/Uninstall"
 	echo "-- Remove script files outside git repo"
+	echo "restore/Restore"
+	echo "-- Put backup save in place"
 }
 
 ## Function to put everything in place 
@@ -44,7 +46,7 @@ function setupFunction() {
 		echo "~/bin not found"
 		echo "--------------------------------------------"
 		echo "~/bin doesn't appear to be configured"
-		echo "Just run the script normally"
+		echo "Just run the script from repo"
 	fi
 	### Check if wine installed
 	echo "Checking if WINE installed"
@@ -93,6 +95,15 @@ function uninstallFunction() {
 	fi
 	### Remove files/folders in ~/Documents 
 	rm -rf ~/Documents/saveEditorWorld
+}
+
+function restoreFunction() {
+	echo "Restore"
+	echo "--------------------------------------------"
+	echo "Put backed up save in place?"
+	echo "Press enter to proceed or ctrl-c to cancel: "
+	read junkInput
+	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000-BK $filePath
 }
 
 ## Function to run script 
@@ -174,21 +185,28 @@ then
 	echo "--------------------------------------------"
 	setupFunction
 	exit
-fi
-if [[ "$1" == "help" || "$1" == "Help" ]]
+
+elif [[ "$1" == "help" || "$1" == "Help" ]]
 then
 	echo "Running Help function"
 	echo "--------------------------------------------"
 	helpFunction
 	exit
-fi
-if [[ "$1" == "uninstall" || "$1" == "Uninstall" ]]
+
+elif [[ "$1" == "uninstall" || "$1" == "Uninstall" ]]
 then
 	echo "Running uninstall function :("
 	echo "--------------------------------------------"
 	uninstallFunction
 	exit
+elif [[ "$1" == "restore" || "$1" == "Restore" ]]
+then
+	echo "Running restore function"
+	echo "--------------------------------------------"
+	restoreFunction
+	exit
+else
+	echo "Running main function"
+	echo "--------------------------------------------"
+	runProgram
 fi
-echo "Running main function"
-echo "--------------------------------------------"
-runProgram
