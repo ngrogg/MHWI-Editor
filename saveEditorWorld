@@ -4,6 +4,7 @@
 
 ## Help function
 function helpFunction() {
+	echo ""
 	echo "Help"
 	echo "--------------------------------------------"
 	echo "help/Help"
@@ -14,16 +15,20 @@ function helpFunction() {
 	echo "-- Remove script files outside git repo"
 	echo "restore/Restore"
 	echo "-- Put backup save in place"
+	echo ""
 }
 
 ## Function to put everything in place 
 function setupFunction() {
 	### check if ~/bin exists
+	echo ""
 	echo "Checking if ~/bin exists"
 	echo "--------------------------------------------"
+	echo ""
 	#### If ~/bin exists, offer to copy script to bin
 	if [[ -d "/home/$(whoami)/bin" ]]
 	then
+		echo ""
 		echo "~/bin exists"
 		echo "--------------------------------------------"
 		echo "Put script in ~/bin?"
@@ -32,21 +37,34 @@ function setupFunction() {
 
 		if [[ "$input" == "Y" || "$input" == "y" ]]
 		then
+			echo ""
 			echo "Moving script to ~/bin"
 			echo "--------------------------------------------"
+			echo ""
+
+			##### Copy saveEditorWorld script to ~/bin
 			cp saveEditorWorld ~/bin/
+
+			echo ""
 			echo "Ensuring execute permissions are set"
+			echo ""
+
+			##### Set executable permissions on copied script
 			chmod 775 ~/bin/saveEditorWorld
 		else
+			echo ""
 			echo "Maybe next time, moving on!"
+			echo ""
 		fi
 
 	#### If ~/bin doesn't exist, tell user they'll need to run script from repo
 	else
+		echo ""
 		echo "~/bin not found"
 		echo "--------------------------------------------"
 		echo "~/bin doesn't appear to be configured"
 		echo "Just run the script from repo"
+		echo ""
 	fi
 	### Check if wine installed
 	echo "Checking if WINE installed"
@@ -54,34 +72,43 @@ function setupFunction() {
 	#### If wine not installed, exit
 	if [[ -z $(which wine) ]]
 	then
+		echo ""
 		echo "ISSUE - WINE not installed"
 		echo "--------------------------------------------"
 		echo "Script requires WINE to be installed"
 		echo "To keep script distro agnostic"
 		echo "WINE needs to be installed manually"
 		echo "Re-install WINE and run again"
+		echo ""
 		exit
 
 	#### If wine installed, echo and move on
 	else
+		echo ""
 		echo "WINE check clear"
 		echo "--------------------------------------------"
 		echo "WINE installed, proceeding"
+		echo ""
 	fi
 
 	### mkdir ~/Documents/saveEditorWorld/saveBackups
+	echo ""
 	echo "Making folders in ~/Documents" 
 	echo "--------------------------------------------"
+	echo ""
 	mkdir -p ~/Documents/saveEditorWorld/saveBackups
 
 	### Unzip to saveEditorWorld
+	echo ""
 	echo "Moving files into place"
 	echo "--------------------------------------------"
+	echo ""
 	unzip MHWISaveEditor-v0.1.5-5995-0-1-5-1651750541.zip -d ~/Documents/saveEditorWorld/
 }
 
 ## Function to remove everything
 function uninstallFunction() {
+	echo ""
 	echo "Uninstall"
 	echo "--------------------------------------------"
 	echo "Remove all files outside git repo?"
@@ -98,6 +125,7 @@ function uninstallFunction() {
 }
 
 function restoreFunction() {
+	echo ""
 	echo "Restore"
 	echo "--------------------------------------------"
 	echo "Put backed up save in place?"
@@ -114,29 +142,39 @@ function runProgram() {
 	### Check if filePath empty
 	if [[ -z $filePath ]]
 	then
+		echo ""
 		echo "ISSUE - Save not found!"
 		echo "--------------------------------------------"
 		echo "MHW/MHWI save not found!"
 		echo "Make sure MHW/MHWI is installed."
 		echo "Exiting"
+		echo ""
 		exit
 	fi
 
 	### Output filepath to screen for verbosity
+	echo ""
 	echo "File path to save"
 	echo "--------------------------------------------"
 	echo $filePath
+	echo ""
 
 	### Copy Save to backup folder 
+	echo ""
 	echo "Copying save to working directory"
 	echo "--------------------------------------------"
+	echo ""
+
+	### Copy savefile to Documents folder 
 	cp $filePath ~/Documents/saveEditorWorld/saveBackups
 
 	### Check if last command ran successfully
 	if [[ $? -ne 0 ]]
 	then
+		echo ""
 		echo "ISSUE - Save not copied"
 		echo "--------------------------------------------"
+		echo ""
 		exit
 	fi
 
@@ -146,30 +184,40 @@ function runProgram() {
 	### Check if last command ran successfully
 	if [[ $? -ne 0 ]]
 	then
+		echo ""
 		echo "ISSUE - Backup not created"
 		echo "--------------------------------------------"
+		echo ""
 		exit
 	fi
 
 	### Run save editor
+	echo ""
 	echo "Running Save Editor"
 	echo "--------------------------------------------"
 	echo "Open your save at the filepath below"
 	echo ""
 	echo "/home/$(whoami)/Documents/saveEditorWorld/saveBackups/SAVEDATA1000"
 	echo ""
-	wine ~/Documents/saveEditorWorld/MHWISaveEditor.exe
 
+	### Launch the save editor
+	wine ~/Documents/saveEditorWorld/MHWISaveEditor.exe
 	### Put save in place 
+	echo ""
 	echo "Putting save files in place"
 	echo "--------------------------------------------"
+	echo ""
+
+	### Copy edited svae file back to steam folder 
 	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 $filePath
 
 	### Check if last command ran successfully
 	if [[ $? -ne 0 ]]
 	then
+		echo ""
 		echo "ISSUE - Save not put in place correctly"
 		echo "--------------------------------------------"
+		echo ""
 		exit
 	fi
 }
@@ -181,6 +229,7 @@ echo "Checking if flags passed"
 echo "--------------------------------------------"
 if [[ "$1" == "setup" || "$1" == "Setup" ]]
 then
+	echo ""
 	echo "Running Setup function"
 	echo "--------------------------------------------"
 	setupFunction
@@ -188,6 +237,7 @@ then
 
 elif [[ "$1" == "help" || "$1" == "Help" ]]
 then
+	echo ""
 	echo "Running Help function"
 	echo "--------------------------------------------"
 	helpFunction
@@ -195,17 +245,20 @@ then
 
 elif [[ "$1" == "uninstall" || "$1" == "Uninstall" ]]
 then
+	echo ""
 	echo "Running uninstall function :("
 	echo "--------------------------------------------"
 	uninstallFunction
 	exit
 elif [[ "$1" == "restore" || "$1" == "Restore" ]]
 then
+	echo ""
 	echo "Running restore function"
 	echo "--------------------------------------------"
 	restoreFunction
 	exit
 else
+	echo ""
 	echo "Running main function"
 	echo "--------------------------------------------"
 	runProgram
