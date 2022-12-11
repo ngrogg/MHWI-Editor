@@ -225,6 +225,7 @@ function runProgram() {
 ## Run script 
 echo "Running save editor"
 echo "--------------------------------------------"
+echo ""
 echo "Checking if flags passed"
 echo "--------------------------------------------"
 if [[ "$1" == "setup" || "$1" == "Setup" ]]
