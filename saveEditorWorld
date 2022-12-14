@@ -35,8 +35,9 @@ function setupFunction() {
 		echo "Enter y/n to proceed: "
 		read input
 
-		if [[ "$input" == "Y" || "$input" == "y" ]]
-		then
+		##### Check input
+		case "$input" in 
+			[Yy])
 			echo ""
 			echo "Moving script to ~/bin"
 			echo "--------------------------------------------"
@@ -51,11 +52,37 @@ function setupFunction() {
 
 			##### Set executable permissions on copied script
 			chmod 775 ~/bin/saveEditorWorld
-		else
+			;;
+			*)
 			echo ""
 			echo "Maybe next time, moving on!"
 			echo ""
-		fi
+			;;
+		esac
+
+			
+		# Commented out the if statement
+		#if [[ "$input" == "Y" || "$input" == "y" ]]
+		#then
+		#	echo ""
+		#	echo "Moving script to ~/bin"
+		#	echo "--------------------------------------------"
+		#	echo ""
+
+		#	##### Copy saveEditorWorld script to ~/bin
+		#	cp saveEditorWorld ~/bin/
+
+		#	echo ""
+		#	echo "Ensuring execute permissions are set"
+		#	echo ""
+
+		#	##### Set executable permissions on copied script
+		#	chmod 775 ~/bin/saveEditorWorld
+		#else
+		#	echo ""
+		#	echo "Maybe next time, moving on!"
+		#	echo ""
+		#fi
 
 	#### If ~/bin doesn't exist, tell user they'll need to run script from repo
 	else
