@@ -18,14 +18,14 @@ function helpFunction() {
 	echo ""
 }
 
-## Function to put everything in place 
+## Function to put save file Editor program in place
 function setupFunction() {
 	### check if ~/bin exists
 	echo ""
 	echo "Checking if ~/bin exists"
 	echo "--------------------------------------------"
 	echo ""
-	#### If ~/bin exists, offer to copy script to bin
+	### If ~/bin exists, offer to copy script to bin
 	if [[ -d "/home/$(whoami)/bin" ]]
 	then
 		echo ""
@@ -35,8 +35,9 @@ function setupFunction() {
 		echo "Enter y/n to proceed: "
 		read input
 
-		##### Check input
+		#### Check input
 		case "$input" in 
+			##### Check if input Y/y
 			[Yy])
 			echo ""
 			echo "Moving script to ~/bin"
@@ -53,6 +54,7 @@ function setupFunction() {
 			##### Set executable permissions on copied script
 			chmod 775 ~/bin/saveEditorWorld
 			;;
+			##### Else
 			*)
 			echo ""
 			echo "Maybe next time, moving on!"
@@ -60,31 +62,7 @@ function setupFunction() {
 			;;
 		esac
 
-			
-		# Commented out the if statement
-		#if [[ "$input" == "Y" || "$input" == "y" ]]
-		#then
-		#	echo ""
-		#	echo "Moving script to ~/bin"
-		#	echo "--------------------------------------------"
-		#	echo ""
-
-		#	##### Copy saveEditorWorld script to ~/bin
-		#	cp saveEditorWorld ~/bin/
-
-		#	echo ""
-		#	echo "Ensuring execute permissions are set"
-		#	echo ""
-
-		#	##### Set executable permissions on copied script
-		#	chmod 775 ~/bin/saveEditorWorld
-		#else
-		#	echo ""
-		#	echo "Maybe next time, moving on!"
-		#	echo ""
-		#fi
-
-	#### If ~/bin doesn't exist, tell user they'll need to run script from repo
+	### If ~/bin doesn't exist, tell user they'll need to run script from repo
 	else
 		echo ""
 		echo "~/bin not found"
@@ -96,7 +74,7 @@ function setupFunction() {
 	### Check if wine installed
 	echo "Checking if WINE installed"
 	echo "--------------------------------------------"
-	#### If wine not installed, exit
+	### If wine not installed, exit
 	if [[ -z $(which wine) ]]
 	then
 		echo ""
@@ -109,7 +87,7 @@ function setupFunction() {
 		echo ""
 		exit
 
-	#### If wine installed, echo and move on
+	### If wine installed, echo and move on
 	else
 		echo ""
 		echo "WINE check clear"
@@ -255,39 +233,40 @@ echo "--------------------------------------------"
 echo ""
 echo "Checking if flags passed"
 echo "--------------------------------------------"
-if [[ "$1" == "setup" || "$1" == "Setup" ]]
-then
+## Check passed values
+case "$1" in
+[Ss]etup)
 	echo ""
 	echo "Running Setup function"
 	echo "--------------------------------------------"
 	setupFunction
 	exit
-
-elif [[ "$1" == "help" || "$1" == "Help" ]]
-then
+	;;
+[Hh]elp)
 	echo ""
 	echo "Running Help function"
 	echo "--------------------------------------------"
 	helpFunction
 	exit
-
-elif [[ "$1" == "uninstall" || "$1" == "Uninstall" ]]
-then
+	;;
+[Uu]ninstall)
 	echo ""
-	echo "Running uninstall function :("
+	echo "Running uninstall function"
 	echo "--------------------------------------------"
 	uninstallFunction
 	exit
-elif [[ "$1" == "restore" || "$1" == "Restore" ]]
-then
+	;;
+[Rr]estore)
 	echo ""
 	echo "Running restore function"
 	echo "--------------------------------------------"
 	restoreFunction
 	exit
-else
+	;;
+*)
 	echo ""
 	echo "Running main function"
 	echo "--------------------------------------------"
 	runProgram
-fi
+	;;
+esac
