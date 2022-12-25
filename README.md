@@ -4,10 +4,10 @@
 A wrapper for the Nexus Mods MHWI save editor. Created since I run Linux, MHWI runs on Linux and I found out the save editor works on Linux. <br>
 
 Original editor can be found here, <br>
-https://www.nexusmods.com/monsterhunterworld/mods/5995
+https://www.nexusmods.com/monsterhunterworld/mods/5995 <br>
 
 I've included the zip file I found to work for this script. I tested and confirmed everything working on
-Pop OS 22 (Ubuntu 22). No warranties and YMMV.
+Pop OS 22 (Ubuntu 22). No warranties and YMMV. <br>
 
 ## Functions
 The script can take BASH flags to perform specific functions. These functions are as follows: <br>
@@ -34,7 +34,7 @@ Removes the script from `~/bin` if applicable and all created files in `~/Docume
 Will put backed up save file in place. Potentially destructive if run on accident! <br>
 
 ### Running
-This is the default action the script will take if no flags are passed. <br>
+This is the default action the script will take if no flags or an unsupported flag are passed. <br>
 I.e. `% ./saveEditorWorld` <br>
 
 Script will copy the save file from installed Steam files to `~/Documents/saveEditorWorld/saveBackups`. <br>
@@ -42,4 +42,4 @@ A backup of the save file will created called `SAVEDATA1000-BK` just in case. <b
 Once the editor loads use the filepath option in the editor to open the copied save at `~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000`. <br>
 From there edit your save, and save when complete. <br>
 On closing the save editor the edited save file will be put in place in Steam files. <br>
-Launch World and enjoy! <br>
+[Launch](Launch) World and enjoy! <br>

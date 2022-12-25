@@ -8,9 +8,9 @@ function helpFunction() {
 	echo "Help"
 	echo "--------------------------------------------"
 	echo "help/Help"
-	echo "-- Display this help message"
+	echo "-- Display this help message and exit"
 	echo "setup/Setup"
-	echo "-- Configure script"
+	echo "-- Put script and files in place"
 	echo "uninstall/Uninstall"
 	echo "-- Remove script files outside git repo"
 	echo "restore/Restore"
@@ -68,7 +68,7 @@ function setupFunction() {
 		echo "~/bin not found"
 		echo "--------------------------------------------"
 		echo "~/bin doesn't appear to be configured"
-		echo "Just run the script from repo"
+		echo "Just run the script from this repo"
 		echo ""
 	fi
 	### Check if wine installed
