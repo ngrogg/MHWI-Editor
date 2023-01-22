@@ -6,34 +6,38 @@
 function helpFunction() {
 	echo ""
 	echo "Help"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
+	echo "A linux wrapper script for the MHWI save editor"
+	echo "Run the script to with flags to launch editor"
+	echo "Run with flags below to run associated functions"
+	echo ""
 	echo "help/Help"
 	echo "-- Display this help message and exit"
+	echo ""
 	echo "setup/Setup"
 	echo "-- Put script and files in place"
+	echo ""
 	echo "uninstall/Uninstall"
 	echo "-- Remove script files outside git repo"
+	echo ""
 	echo "restore/Restore"
 	echo "-- Put backup save in place"
-	echo ""
 }
 
 ## Function to put save file Editor program in place
 function setupFunction() {
 	### check if ~/bin exists
-	echo ""
 	echo "Checking if ~/bin exists"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
 	echo ""
+
 	### If ~/bin exists, offer to copy script to bin
-	if [[ -d "/home/$(whoami)/bin" ]]
-	then
+	if [[ -d "/home/$(whoami)/bin" ]]; then
 		echo ""
 		echo "~/bin exists"
-		echo "--------------------------------------------"
+		echo "----------------------------------------------------"
 		echo "Put script in ~/bin?"
-		echo "Enter y/n to proceed: "
-		read input
+		read -p "Enter y/n to proceed: " input
 
 		#### Check input
 		case "$input" in 
@@ -41,7 +45,7 @@ function setupFunction() {
 			[Yy])
 			echo ""
 			echo "Moving script to ~/bin"
-			echo "--------------------------------------------"
+			echo "----------------------------------------------------"
 			echo ""
 
 			##### Copy saveEditorWorld script to ~/bin
@@ -66,20 +70,19 @@ function setupFunction() {
 	else
 		echo ""
 		echo "~/bin not found"
-		echo "--------------------------------------------"
+		echo "----------------------------------------------------"
 		echo "~/bin doesn't appear to be configured"
 		echo "Just run the script from this repo"
 		echo ""
 	fi
 	### Check if wine installed
 	echo "Checking if WINE installed"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
 	### If wine not installed, exit
-	if [[ -z $(which wine) ]]
-	then
+	if [[ -z $(which wine) ]]; then
 		echo ""
 		echo "ISSUE - WINE not installed"
-		echo "--------------------------------------------"
+		echo "----------------------------------------------------"
 		echo "Script requires WINE to be installed"
 		echo "To keep script distro agnostic"
 		echo "WINE needs to be installed manually"
@@ -91,7 +94,7 @@ function setupFunction() {
 	else
 		echo ""
 		echo "WINE check clear"
-		echo "--------------------------------------------"
+		echo "----------------------------------------------------"
 		echo "WINE installed, proceeding"
 		echo ""
 	fi
@@ -99,14 +102,14 @@ function setupFunction() {
 	### mkdir ~/Documents/saveEditorWorld/saveBackups
 	echo ""
 	echo "Making folders in ~/Documents" 
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
 	echo ""
 	mkdir -p ~/Documents/saveEditorWorld/saveBackups
 
 	### Unzip to saveEditorWorld
 	echo ""
 	echo "Moving files into place"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
 	echo ""
 	unzip MHWISaveEditor-v0.1.5-5995-0-1-5-1651750541.zip -d ~/Documents/saveEditorWorld/
 }
@@ -115,13 +118,12 @@ function setupFunction() {
 function uninstallFunction() {
 	echo ""
 	echo "Uninstall"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
 	echo "Remove all files outside git repo?"
-	echo "Press enter to proceed or ctrl-c to cancel: "
-	read junkInput
+	read -n1 -p "Press enter to proceed or ctrol-c to cancel" junkInput
+
 	### Check if script in ~/bin
-	if [[ -f "~/bin/worldSaveEditor" ]]
-	then
+	if [[ -f "~/bin/worldSaveEditor" ]]; then
 		#### Remove if exists
 		rm ~/bin/saveEditorWorld
 	fi
@@ -132,10 +134,9 @@ function uninstallFunction() {
 function restoreFunction() {
 	echo ""
 	echo "Restore"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
 	echo "Put backed up save in place?"
-	echo "Press enter to proceed or ctrl-c to cancel: "
-	read junkInput
+	read -n1 -p "Press enter to proceed or ctrl-c to cancel" junkInput
 	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000-BK $filePath
 }
 
@@ -145,11 +146,10 @@ function runProgram() {
 	filePath=$(find ~/ -name SAVEDATA1000 | grep -i userdata)
 
 	### Check if filePath empty
-	if [[ -z $filePath ]]
-	then
+	if [[ -z $filePath ]]; then
 		echo ""
 		echo "ISSUE - Save not found!"
-		echo "--------------------------------------------"
+		echo "----------------------------------------------------"
 		echo "MHW/MHWI save not found!"
 		echo "Make sure MHW/MHWI is installed."
 		echo "Exiting"
@@ -160,25 +160,24 @@ function runProgram() {
 	### Output filepath to screen for verbosity
 	echo ""
 	echo "File path to save"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
 	echo $filePath
 	echo ""
 
 	### Copy Save to backup folder 
 	echo ""
 	echo "Copying save to working directory"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
 	echo ""
 
 	### Copy savefile to Documents folder 
 	cp $filePath ~/Documents/saveEditorWorld/saveBackups
 
 	### Check if last command ran successfully
-	if [[ $? -ne 0 ]]
-	then
+	if [[ $? -ne 0 ]]; then
 		echo ""
 		echo "ISSUE - Save not copied"
-		echo "--------------------------------------------"
+		echo "----------------------------------------------------"
 		echo ""
 		exit
 	fi
@@ -187,11 +186,10 @@ function runProgram() {
 	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000-BK
 
 	### Check if last command ran successfully
-	if [[ $? -ne 0 ]]
-	then
+	if [[ $? -ne 0 ]]; then
 		echo ""
 		echo "ISSUE - Backup not created"
-		echo "--------------------------------------------"
+		echo "----------------------------------------------------"
 		echo ""
 		exit
 	fi
@@ -199,7 +197,7 @@ function runProgram() {
 	### Run save editor
 	echo ""
 	echo "Running Save Editor"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
 	echo "Open your save at the filepath below"
 	echo ""
 	echo "/home/$(whoami)/Documents/saveEditorWorld/saveBackups/SAVEDATA1000"
@@ -210,18 +208,17 @@ function runProgram() {
 	### Put save in place 
 	echo ""
 	echo "Putting save files in place"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
 	echo ""
 
 	### Copy edited svae file back to steam folder 
 	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 $filePath
 
 	### Check if last command ran successfully
-	if [[ $? -ne 0 ]]
-	then
+	if [[ $? -ne 0 ]]; then
 		echo ""
 		echo "ISSUE - Save not put in place correctly"
-		echo "--------------------------------------------"
+		echo "----------------------------------------------------"
 		echo ""
 		exit
 	fi
@@ -229,44 +226,50 @@ function runProgram() {
 
 ## Run script 
 echo "Running save editor"
-echo "--------------------------------------------"
+echo "----------------------------------------------------"
 echo ""
 echo "Checking if flags passed"
-echo "--------------------------------------------"
+echo "----------------------------------------------------"
+
 ## Check passed values
 case "$1" in
 [Ss]etup)
 	echo ""
 	echo "Running Setup function"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
+	echo ""
 	setupFunction
 	exit
 	;;
 [Hh]elp)
 	echo ""
 	echo "Running Help function"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
+	echo ""
 	helpFunction
 	exit
 	;;
 [Uu]ninstall)
 	echo ""
 	echo "Running uninstall function"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
+	echo ""
 	uninstallFunction
 	exit
 	;;
 [Rr]estore)
 	echo ""
 	echo "Running restore function"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
+	echo ""
 	restoreFunction
 	exit
 	;;
 *)
 	echo ""
 	echo "Running main function"
-	echo "--------------------------------------------"
+	echo "----------------------------------------------------"
+	echo ""
 	runProgram
 	;;
 esac
