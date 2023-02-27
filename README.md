@@ -42,4 +42,4 @@ A backup of the save file will created called `SAVEDATA1000-BK` just in case. <b
 Once the editor loads use the filepath option in the editor to open the copied save at `~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000`. <br>
 From there edit your save, and save when complete. <br>
 On closing the save editor the edited save file will be put in place in Steam files. <br>
-[Launch](Launch) World and enjoy! <br>
+Launch World and enjoy! <br>
