@@ -1,5 +1,8 @@
 # MHWI Editor for Linux
 
+## DISCLAIMER 
+As of 03-18-2023 I'm no longer planning to tinker with this. 
+
 ## Overview
 A wrapper for the Nexus Mods MHWI save editor. <br>
 Created since I run Linux, MHWI runs on Linux and I found out the save editor works on Linux with wine. <br>
