@@ -1,7 +1,8 @@
-# MHWI Editor
+# MHWI Editor for Linux
 
 ## Overview
-A wrapper for the Nexus Mods MHWI save editor. Created since I run Linux, MHWI runs on Linux and I found out the save editor works on Linux. <br>
+A wrapper for the Nexus Mods MHWI save editor. <br>
+Created since I run Linux, MHWI runs on Linux and I found out the save editor works on Linux with wine. <br>
 
 Original editor can be found here, <br>
 https://www.nexusmods.com/monsterhunterworld/mods/5995 <br>
@@ -34,8 +35,8 @@ Removes the script from `~/bin` if applicable and all created files in `~/Docume
 Will put backed up save file in place. Potentially destructive if run on accident! <br>
 
 ### Running
-This is the default action the script will take if no flags or an unsupported flag are passed. <br>
-I.e. `% ./saveEditorWorld` <br>
+To run the save editor pass the 'run' flag: <br>
+`% ./saveEditorWorld run`
 
 Script will copy the save file from installed Steam files to `~/Documents/saveEditorWorld/saveBackups`. <br>
 A backup of the save file will created called `SAVEDATA1000-BK` just in case. <br>

@@ -4,224 +4,224 @@
 
 ## Help function
 function helpFunction() {
-	echo ""
-	echo "Help"
-	echo "----------------------------------------------------"
-	echo "A linux wrapper script for the MHWI save editor"
-	echo "Run the script to with flags to launch editor"
-	echo "Run with flags below to run associated functions"
-	echo ""
-	echo "help/Help"
-	echo "-- Display this help message and exit"
-	echo ""
-	echo "setup/Setup"
-	echo "-- Put script and files in place"
-	echo ""
-	echo "uninstall/Uninstall"
-	echo "-- Remove script files outside git repo"
-	echo ""
-	echo "restore/Restore"
-	echo "-- Put backup save in place"
+echo "
+Help
+----------------------------------------------------
+A linux wrapper script for the MHWI save editor
+Run the script to with flags to launch editor
+Run with flags below to run associated functions
+
+help/Help
+-- Display this help message and exit
+
+setup/Setup
+-- Put script and files in place
+
+uninstall/Uninstall
+-- Remove script files outside git repo
+
+restore/Restore
+-- Put backup save in place"
 }
 
 ## Function to put save file Editor program in place
 function setupFunction() {
-	### check if ~/bin exists
-	echo "Checking if ~/bin exists"
+### check if ~/bin exists
+echo "Checking if ~/bin exists"
+echo "----------------------------------------------------"
+echo ""
+
+### If ~/bin exists, offer to copy script to bin
+if [[ -d "/home/$(whoami)/bin" ]]; then
+	echo ""
+	echo "~/bin exists"
 	echo "----------------------------------------------------"
+	echo "Put script in ~/bin?"
+	read -p "Enter y/n to proceed: " input
+
+	#### Check input
+	case "$input" in 
+		##### Check if input Y/y
+		[Yy])
+		echo ""
+		echo "Moving script to ~/bin"
+		echo "----------------------------------------------------"
+		echo ""
+
+		##### Copy saveEditorWorld script to ~/bin
+		cp saveEditorWorld ~/bin/
+
+		echo ""
+		echo "Ensuring execute permissions are set"
+		echo ""
+
+		##### Set executable permissions on copied script
+		chmod 775 ~/bin/saveEditorWorld
+		;;
+		##### Else
+		*)
+		echo ""
+		echo "Maybe next time, moving on!"
+		echo ""
+		;;
+	esac
+
+### If ~/bin doesn't exist, tell user they'll need to run script from repo
+else
 	echo ""
-
-	### If ~/bin exists, offer to copy script to bin
-	if [[ -d "/home/$(whoami)/bin" ]]; then
-		echo ""
-		echo "~/bin exists"
-		echo "----------------------------------------------------"
-		echo "Put script in ~/bin?"
-		read -p "Enter y/n to proceed: " input
-
-		#### Check input
-		case "$input" in 
-			##### Check if input Y/y
-			[Yy])
-			echo ""
-			echo "Moving script to ~/bin"
-			echo "----------------------------------------------------"
-			echo ""
-
-			##### Copy saveEditorWorld script to ~/bin
-			cp saveEditorWorld ~/bin/
-
-			echo ""
-			echo "Ensuring execute permissions are set"
-			echo ""
-
-			##### Set executable permissions on copied script
-			chmod 775 ~/bin/saveEditorWorld
-			;;
-			##### Else
-			*)
-			echo ""
-			echo "Maybe next time, moving on!"
-			echo ""
-			;;
-		esac
-
-	### If ~/bin doesn't exist, tell user they'll need to run script from repo
-	else
-		echo ""
-		echo "~/bin not found"
-		echo "----------------------------------------------------"
-		echo "~/bin doesn't appear to be configured"
-		echo "Just run the script from this repo"
-		echo ""
-	fi
-	### Check if wine installed
-	echo "Checking if WINE installed"
+	echo "~/bin not found"
 	echo "----------------------------------------------------"
-	### If wine not installed, exit
-	if [[ -z $(which wine) ]]; then
-		echo ""
-		echo "ISSUE - WINE not installed"
-		echo "----------------------------------------------------"
-		echo "Script requires WINE to be installed"
-		echo "To keep script distro agnostic"
-		echo "WINE needs to be installed manually"
-		echo "Re-install WINE and run again"
-		echo ""
-		exit
-
-	### If wine installed, echo and move on
-	else
-		echo ""
-		echo "WINE check clear"
-		echo "----------------------------------------------------"
-		echo "WINE installed, proceeding"
-		echo ""
-	fi
-
-	### mkdir ~/Documents/saveEditorWorld/saveBackups
+	echo "~/bin doesn't appear to be configured"
+	echo "Just run the script from this repo"
 	echo ""
-	echo "Making folders in ~/Documents" 
+fi
+### Check if wine installed
+echo "Checking if WINE installed"
+echo "----------------------------------------------------"
+### If wine not installed, exit
+if [[ -z $(which wine) ]]; then
+	echo ""
+	echo "ISSUE - WINE not installed"
 	echo "----------------------------------------------------"
+	echo "Script requires WINE to be installed"
+	echo "To keep script distro agnostic"
+	echo "WINE needs to be installed manually"
+	echo "Re-install WINE and run again"
 	echo ""
-	mkdir -p ~/Documents/saveEditorWorld/saveBackups
+	exit
 
-	### Unzip to saveEditorWorld
+### If wine installed, echo and move on
+else
 	echo ""
-	echo "Moving files into place"
+	echo "WINE check clear"
 	echo "----------------------------------------------------"
+	echo "WINE installed, proceeding"
 	echo ""
-	unzip MHWISaveEditor-v0.1.5-5995-0-1-5-1651750541.zip -d ~/Documents/saveEditorWorld/
+fi
+
+### mkdir ~/Documents/saveEditorWorld/saveBackups
+echo ""
+echo "Making folders in ~/Documents" 
+echo "----------------------------------------------------"
+echo ""
+mkdir -p ~/Documents/saveEditorWorld/saveBackups
+
+### Unzip to saveEditorWorld
+echo ""
+echo "Moving files into place"
+echo "----------------------------------------------------"
+echo ""
+unzip MHWISaveEditor-v0.1.5-5995-0-1-5-1651750541.zip -d ~/Documents/saveEditorWorld/
 }
 
 ## Function to remove everything
 function uninstallFunction() {
-	echo ""
-	echo "Uninstall"
-	echo "----------------------------------------------------"
-	echo "Remove all files outside git repo?"
-	read -n1 -p "Press enter to proceed or ctrol-c to cancel" junkInput
+echo ""
+echo "Uninstall"
+echo "----------------------------------------------------"
+echo "Remove all files outside git repo?"
+read -n1 -p "Press enter to proceed or ctrol-c to cancel" junkInput
 
-	### Check if script in ~/bin
-	if [[ -f "~/bin/worldSaveEditor" ]]; then
-		#### Remove if exists
-		rm ~/bin/saveEditorWorld
-	fi
-	### Remove files/folders in ~/Documents 
-	rm -rf ~/Documents/saveEditorWorld
+### Check if script in ~/bin
+if [[ -f "~/bin/worldSaveEditor" ]]; then
+	#### Remove if exists
+	rm ~/bin/saveEditorWorld
+fi
+### Remove files/folders in ~/Documents 
+rm -rf ~/Documents/saveEditorWorld
 }
 
 function restoreFunction() {
-	echo ""
-	echo "Restore"
-	echo "----------------------------------------------------"
-	echo "Put backed up save in place?"
-	read -n1 -p "Press enter to proceed or ctrl-c to cancel" junkInput
-	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000-BK $filePath
+echo ""
+echo "Restore"
+echo "----------------------------------------------------"
+echo "Put backed up save in place?"
+read -n1 -p "Press enter to proceed or ctrl-c to cancel" junkInput
+cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000-BK $filePath
 }
 
 ## Function to run script 
 function runProgram() {
-	### Filepath to save file
-	filePath=$(find ~/ -name SAVEDATA1000 | grep -i userdata)
+### Filepath to save file
+filePath=$(find ~/ -name SAVEDATA1000 | grep -i userdata)
 
-	### Check if filePath empty
-	if [[ -z $filePath ]]; then
-		echo ""
-		echo "ISSUE - Save not found!"
-		echo "----------------------------------------------------"
-		echo "MHW/MHWI save not found!"
-		echo "Make sure MHW/MHWI is installed."
-		echo "Exiting"
-		echo ""
-		exit
-	fi
-
-	### Output filepath to screen for verbosity
+### Check if filePath empty
+if [[ -z $filePath ]]; then
 	echo ""
-	echo "File path to save"
+	echo "ISSUE - Save not found!"
 	echo "----------------------------------------------------"
-	echo $filePath
+	echo "MHW/MHWI save not found!"
+	echo "Make sure MHW/MHWI is installed."
+	echo "Exiting"
 	echo ""
+	exit
+fi
 
-	### Copy Save to backup folder 
+### Output filepath to screen for verbosity
+echo ""
+echo "File path to save"
+echo "----------------------------------------------------"
+echo $filePath
+echo ""
+
+### Copy Save to backup folder 
+echo ""
+echo "Copying save to working directory"
+echo "----------------------------------------------------"
+echo ""
+
+### Copy savefile to Documents folder 
+cp $filePath ~/Documents/saveEditorWorld/saveBackups
+
+### Check if last command ran successfully
+if [[ $? -ne 0 ]]; then
 	echo ""
-	echo "Copying save to working directory"
-	echo "----------------------------------------------------"
-	echo ""
-
-	### Copy savefile to Documents folder 
-	cp $filePath ~/Documents/saveEditorWorld/saveBackups
-
-	### Check if last command ran successfully
-	if [[ $? -ne 0 ]]; then
-		echo ""
-		echo "ISSUE - Save not copied"
-		echo "----------------------------------------------------"
-		echo ""
-		exit
-	fi
-
-	### Create backup of save
-	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000-BK
-
-	### Check if last command ran successfully
-	if [[ $? -ne 0 ]]; then
-		echo ""
-		echo "ISSUE - Backup not created"
-		echo "----------------------------------------------------"
-		echo ""
-		exit
-	fi
-
-	### Run save editor
-	echo ""
-	echo "Running Save Editor"
-	echo "----------------------------------------------------"
-	echo "Open your save at the filepath below"
-	echo ""
-	echo "/home/$(whoami)/Documents/saveEditorWorld/saveBackups/SAVEDATA1000"
-	echo ""
-
-	### Launch the save editor
-	wine ~/Documents/saveEditorWorld/MHWISaveEditor.exe
-	### Put save in place 
-	echo ""
-	echo "Putting save files in place"
+	echo "ISSUE - Save not copied"
 	echo "----------------------------------------------------"
 	echo ""
+	exit
+fi
 
-	### Copy edited svae file back to steam folder 
-	cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 $filePath
+### Create backup of save
+cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000-BK
 
-	### Check if last command ran successfully
-	if [[ $? -ne 0 ]]; then
-		echo ""
-		echo "ISSUE - Save not put in place correctly"
-		echo "----------------------------------------------------"
-		echo ""
-		exit
-	fi
+### Check if last command ran successfully
+if [[ $? -ne 0 ]]; then
+	echo ""
+	echo "ISSUE - Backup not created"
+	echo "----------------------------------------------------"
+	echo ""
+	exit
+fi
+
+### Run save editor
+echo ""
+echo "Running Save Editor"
+echo "----------------------------------------------------"
+echo "Open your save at the filepath below"
+echo ""
+echo "/home/$(whoami)/Documents/saveEditorWorld/saveBackups/SAVEDATA1000"
+echo ""
+
+### Launch the save editor
+wine ~/Documents/saveEditorWorld/MHWISaveEditor.exe
+### Put save in place 
+echo ""
+echo "Putting save files in place"
+echo "----------------------------------------------------"
+echo ""
+
+### Copy edited svae file back to steam folder 
+cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 $filePath
+
+### Check if last command ran successfully
+if [[ $? -ne 0 ]]; then
+	echo ""
+	echo "ISSUE - Save not put in place correctly"
+	echo "----------------------------------------------------"
+	echo ""
+	exit
+fi
 }
 
 ## Run script 
@@ -265,11 +265,18 @@ case "$1" in
 	restoreFunction
 	exit
 	;;
-*)
+[Rr]un)
 	echo ""
 	echo "Running main function"
 	echo "----------------------------------------------------"
 	echo ""
 	runProgram
+	exit
+	;;
+*)
+	echo "Invalid input detected, running help function and exiting"
+	echo "----------------------------------------------------"
+	helpFunction
+	exit
 	;;
 esac
