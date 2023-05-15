@@ -40,7 +40,7 @@ if [[ -d "/home/$(whoami)/bin" ]]; then
 	read -p "Enter y/n to proceed: " input
 
 	#### Check input
-	case "$input" in 
+	case "$input" in
 		##### Check if input Y/y
 		[Yy])
 		echo ""
@@ -75,6 +75,7 @@ else
 	echo "Just run the script from this repo"
 	echo ""
 fi
+
 ### Check if wine installed
 echo "Checking if WINE installed"
 echo "----------------------------------------------------"
@@ -86,9 +87,9 @@ if [[ -z $(which wine) ]]; then
 	echo "Script requires WINE to be installed"
 	echo "To keep script distro agnostic"
 	echo "WINE needs to be installed manually"
-	echo "Re-install WINE and run again"
+	echo "Install WINE and run again"
 	echo ""
-	exit
+	exit 1
 
 ### If wine installed, echo and move on
 else
@@ -99,9 +100,32 @@ else
 	echo ""
 fi
 
+### Check if zip installed
+echo "Checking if unzip installed"
+echo "----------------------------------------------------"
+if [[ -z $(which unzip) ]]; then
+	echo ""
+	echo "ISSUE - unzip not installed"
+	echo "----------------------------------------------------"
+	echo "Script requires unzip to be installed"
+	echo "To keep script distro agnostic"
+	echo "unzip needs to be installed manually"
+	echo "Install unzip and run again"
+	echo ""
+	exit 1
+
+### Else if unzip installed, echo and move on
+else
+	echo ""
+	echo "unzip check clear"
+	echo "----------------------------------------------------"
+	echo "unzip installed, proceeding"
+	echo ""
+fi
+
 ### mkdir ~/Documents/saveEditorWorld/saveBackups
 echo ""
-echo "Making folders in ~/Documents" 
+echo "Making folders in ~/Documents"
 echo "----------------------------------------------------"
 echo ""
 mkdir -p ~/Documents/saveEditorWorld/saveBackups
@@ -127,7 +151,7 @@ if [[ -f "~/bin/worldSaveEditor" ]]; then
 	#### Remove if exists
 	rm ~/bin/saveEditorWorld
 fi
-### Remove files/folders in ~/Documents 
+### Remove files/folders in ~/Documents
 rm -rf ~/Documents/saveEditorWorld
 }
 
@@ -140,7 +164,7 @@ read -n1 -p "Press enter to proceed or ctrl-c to cancel" junkInput
 cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000-BK $filePath
 }
 
-## Function to run script 
+## Function to run script
 function runProgram() {
 ### Filepath to save file
 filePath=$(find ~/ -name SAVEDATA1000 | grep -i userdata)
@@ -164,13 +188,13 @@ echo "----------------------------------------------------"
 echo $filePath
 echo ""
 
-### Copy Save to backup folder 
+### Copy Save to backup folder
 echo ""
 echo "Copying save to working directory"
 echo "----------------------------------------------------"
 echo ""
 
-### Copy savefile to Documents folder 
+### Copy savefile to Documents folder
 cp $filePath ~/Documents/saveEditorWorld/saveBackups
 
 ### Check if last command ran successfully
@@ -205,13 +229,13 @@ echo ""
 
 ### Launch the save editor
 wine ~/Documents/saveEditorWorld/MHWISaveEditor.exe
-### Put save in place 
+### Put save in place
 echo ""
 echo "Putting save files in place"
 echo "----------------------------------------------------"
 echo ""
 
-### Copy edited svae file back to steam folder 
+### Copy edited svae file back to steam folder
 cp ~/Documents/saveEditorWorld/saveBackups/SAVEDATA1000 $filePath
 
 ### Check if last command ran successfully
@@ -224,7 +248,7 @@ if [[ $? -ne 0 ]]; then
 fi
 }
 
-## Run script 
+## Run script
 echo "Running save editor"
 echo "----------------------------------------------------"
 echo ""

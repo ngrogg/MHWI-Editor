@@ -1,7 +1,8 @@
 # MHWI Editor for Linux
 
-## DISCLAIMER 
-As of 03-18-2023 I'm no longer planning to tinker with this. 
+## DISCLAIMER
+As of 03-18-2023 I'm no longer planning to tinker with this. <br>
+As of 05-14-2023 I've archived this repo. <br>
 
 ## Overview
 A wrapper for the Nexus Mods MHWI save editor. <br>
@@ -13,11 +14,19 @@ https://www.nexusmods.com/monsterhunterworld/mods/5995 <br>
 I've included the zip file I found to work for this script. I tested and confirmed everything working on
 Pop OS 22 (Ubuntu 22). No warranties and YMMV. <br>
 
+## Requirements
+You'll need at least the following software:
+* steam
+  - Proton enabled
+  - Monster Hunter World
+* wine
+* unzip
+
 ## Functions
 The script can take BASH flags to perform specific functions. These functions are as follows: <br>
 
-### Help 
-Outputs script help function one-liners and exits. 
+### Help
+Outputs script help function one-liners and exits.
 
 ### Setup
 The script has a 'setup' function to help put everything in place for ease of use. <br>
@@ -28,7 +37,7 @@ This function check the following:
 * If wine is installed
   - To be distro agnostic, the script will exit if Wine not installed
 * If the filepath required for the project exists in `~/Documents`
-* Create required folders in `~/Documents` 
+* Create required folders in `~/Documents`
 * unzip save editor to created folders in `~/Documents`
 
 ### Uninstall
